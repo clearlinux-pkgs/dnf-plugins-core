@@ -11,7 +11,7 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/doc/CMakeLists.txt b/doc/CMakeLists.txt
-index dd97eb2..cccfe10 100644
+index 3fb665d..c5a958a 100644
 --- a/doc/CMakeLists.txt
 +++ b/doc/CMakeLists.txt
 @@ -4,7 +4,7 @@

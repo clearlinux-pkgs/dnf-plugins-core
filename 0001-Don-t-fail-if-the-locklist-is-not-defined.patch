@@ -9,12 +9,12 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  1 file changed, 4 insertions(+), 9 deletions(-)
 
 diff --git a/plugins/versionlock.py b/plugins/versionlock.py
-index be4b6f2..293bf54 100644
+index 19fbd8c..99b3304 100644
 --- a/plugins/versionlock.py
 +++ b/plugins/versionlock.py
-@@ -102,11 +102,6 @@ class VersionLock(dnf.Plugin):
-                     locked_names.add(nevra.name)
-                     locked_query = locked_query.union(pat_query)
+@@ -107,11 +107,6 @@ class VersionLock(dnf.Plugin):
+                 if pat_query:
+                     break
  
 -        if count[1]:
 -            logger.debug(APPLY_EXCLUDE.format(locklist_fn, count[1]))
@@ -24,7 +24,7 @@ index be4b6f2..293bf54 100644
          if locked_names:
              all_versions = self.base.sack.query().filter(name__glob=list(locked_names))
              other_versions = all_versions.difference(locked_query)
-@@ -179,13 +174,13 @@ class VersionLockCommand(dnf.cli.Command):
+@@ -195,13 +190,13 @@ class VersionLockCommand(dnf.cli.Command):
                  print(pat)
          elif cmd == 'clear':
              if not locklist_fn:
@@ -40,7 +40,7 @@ index be4b6f2..293bf54 100644
              dirname = os.path.dirname(locklist_fn)
              (out, tmpfilename) = tempfile.mkstemp(dir=dirname, suffix='.tmp')
              locked_specs = _read_locklist()
-@@ -209,7 +204,7 @@ def _read_locklist():
+@@ -225,7 +220,7 @@ def _read_locklist():
      locklist = []
      try:
          if not locklist_fn:
@@ -49,7 +49,7 @@ index be4b6f2..293bf54 100644
          with open(locklist_fn) as llfile:
              for line in llfile.readlines():
                  if line.startswith('#') or line.strip() == '':
-@@ -254,7 +249,7 @@ def _write_locklist(base, args, raw, try_installed, comment, info, prefix):
+@@ -270,7 +265,7 @@ def _write_locklist(base, args, raw, try_installed, comment, info, prefix):
      if specs:
          try:
              if not locklist_fn:
