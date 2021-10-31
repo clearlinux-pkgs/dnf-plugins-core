@@ -4,7 +4,7 @@
 #
 Name     : dnf-plugins-core
 Version  : 4.0.24
-Release  : 43
+Release  : 44
 URL      : https://github.com/rpm-software-management/dnf-plugins-core/archive/4.0.24/dnf-plugins-core-4.0.24.tar.gz
 Source0  : https://github.com/rpm-software-management/dnf-plugins-core/archive/4.0.24/dnf-plugins-core-4.0.24.tar.gz
 Summary  : Core Plugins for DNF
@@ -91,7 +91,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1635724703
+export SOURCE_DATE_EPOCH=1635724779
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -105,7 +105,7 @@ make  %{?_smp_mflags}  ; make doc-man
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1635724703
+export SOURCE_DATE_EPOCH=1635724779
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/dnf-plugins-core
 cp %{_builddir}/dnf-plugins-core-4.0.24/COPYING %{buildroot}/usr/share/package-licenses/dnf-plugins-core/4cc77b90af91e615a64ae04893fdffa7939db84c
