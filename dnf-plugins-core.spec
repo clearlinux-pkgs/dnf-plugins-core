@@ -4,7 +4,7 @@
 #
 Name     : dnf-plugins-core
 Version  : 4.0.24
-Release  : 45
+Release  : 46
 URL      : https://github.com/rpm-software-management/dnf-plugins-core/archive/4.0.24/dnf-plugins-core-4.0.24.tar.gz
 Source0  : https://github.com/rpm-software-management/dnf-plugins-core/archive/4.0.24/dnf-plugins-core-4.0.24.tar.gz
 Summary  : Core Plugins for DNF
@@ -16,10 +16,11 @@ Requires: dnf-plugins-core-locales = %{version}-%{release}
 Requires: dnf-plugins-core-man = %{version}-%{release}
 Requires: dnf-plugins-core-python = %{version}-%{release}
 Requires: dnf-plugins-core-python3 = %{version}-%{release}
-BuildRequires : Sphinx
 BuildRequires : buildreq-cmake
 BuildRequires : gettext-dev
 BuildRequires : git
+BuildRequires : pypi(sphinx)
+BuildRequires : pypi-sphinx
 Patch1: 0001-Don-t-fail-if-the-locklist-is-not-defined.patch
 Patch2: 0002-sphinx-build-3-does-not-exist.patch
 
@@ -91,7 +92,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1635724779
+export SOURCE_DATE_EPOCH=1641854558
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -105,7 +106,7 @@ make  %{?_smp_mflags}  ; make doc-man
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1635724779
+export SOURCE_DATE_EPOCH=1641854558
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/dnf-plugins-core
 cp %{_builddir}/dnf-plugins-core-4.0.24/COPYING %{buildroot}/usr/share/package-licenses/dnf-plugins-core/4cc77b90af91e615a64ae04893fdffa7939db84c
