@@ -4,10 +4,10 @@
 # Using build pattern: cmake
 #
 Name     : dnf-plugins-core
-Version  : 4.3.1
-Release  : 52
-URL      : https://github.com/rpm-software-management/dnf-plugins-core/archive/4.3.1/dnf-plugins-core-4.3.1.tar.gz
-Source0  : https://github.com/rpm-software-management/dnf-plugins-core/archive/4.3.1/dnf-plugins-core-4.3.1.tar.gz
+Version  : 4.4.2
+Release  : 53
+URL      : https://github.com/rpm-software-management/dnf-plugins-core/archive/4.4.2/dnf-plugins-core-4.4.2.tar.gz
+Source0  : https://github.com/rpm-software-management/dnf-plugins-core/archive/4.4.2/dnf-plugins-core-4.4.2.tar.gz
 Summary  : Core Plugins for DNF
 Group    : Development/Tools
 License  : GPL-2.0 GPL-2.0+
@@ -17,6 +17,7 @@ Requires: dnf-plugins-core-locales = %{version}-%{release}
 Requires: dnf-plugins-core-man = %{version}-%{release}
 Requires: dnf-plugins-core-python = %{version}-%{release}
 Requires: dnf-plugins-core-python3 = %{version}-%{release}
+Requires: dnf-plugins-core-services = %{version}-%{release}
 Requires: dbus-python
 BuildRequires : buildreq-cmake
 BuildRequires : gettext-dev
@@ -88,18 +89,27 @@ Requires: pypi(six)
 python3 components for the dnf-plugins-core package.
 
 
+%package services
+Summary: services components for the dnf-plugins-core package.
+Group: Systemd services
+Requires: systemd
+
+%description services
+services components for the dnf-plugins-core package.
+
+
 %prep
-%setup -q -n dnf-plugins-core-4.3.1
-cd %{_builddir}/dnf-plugins-core-4.3.1
-%patch1 -p1
-%patch2 -p1
+%setup -q -n dnf-plugins-core-4.4.2
+cd %{_builddir}/dnf-plugins-core-4.4.2
+%patch -P 1 -p1
+%patch -P 2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1684420306
+export SOURCE_DATE_EPOCH=1691527248
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -113,7 +123,7 @@ make  %{?_smp_mflags}  ; make doc-man
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1684420306
+export SOURCE_DATE_EPOCH=1691527248
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/dnf-plugins-core
 cp %{_builddir}/dnf-plugins-core-%{version}/COPYING %{buildroot}/usr/share/package-licenses/dnf-plugins-core/4cc77b90af91e615a64ae04893fdffa7939db84c || :
@@ -159,6 +169,7 @@ rm -f %{buildroot}*/usr/share/man/man8/yum-*
 /usr/share/man/man8/dnf-repomanage.8
 /usr/share/man/man8/dnf-reposync.8
 /usr/share/man/man8/dnf-show-leaves.8
+/usr/share/man/man8/dnf-system-upgrade.8
 /usr/share/man/man8/dnf-versionlock.8
 
 %files python
@@ -167,6 +178,11 @@ rm -f %{buildroot}*/usr/share/man/man8/yum-*
 %files python3
 %defattr(-,root,root,-)
 /usr/lib/python3*/*
+
+%files services
+%defattr(-,root,root,-)
+/usr/lib/systemd/system/dnf-system-upgrade-cleanup.service
+/usr/lib/systemd/system/dnf-system-upgrade.service
 
 %files locales -f dnf-plugins-core.lang
 %defattr(-,root,root,-)
