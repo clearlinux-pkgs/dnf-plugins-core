@@ -5,7 +5,7 @@
 #
 Name     : dnf-plugins-core
 Version  : 4.4.2
-Release  : 53
+Release  : 54
 URL      : https://github.com/rpm-software-management/dnf-plugins-core/archive/4.4.2/dnf-plugins-core-4.4.2.tar.gz
 Source0  : https://github.com/rpm-software-management/dnf-plugins-core/archive/4.4.2/dnf-plugins-core-4.4.2.tar.gz
 Summary  : Core Plugins for DNF
@@ -29,6 +29,7 @@ BuildRequires : pypi-sphinx
 %define debug_package %{nil}
 Patch1: 0001-Don-t-fail-if-the-locklist-is-not-defined.patch
 Patch2: 0002-sphinx-build-3-does-not-exist.patch
+Patch3: 0003-Force-creation-of-dnf-cache-directory.patch
 
 %description
 Core Plugins for DNF. This package enhances DNF with builddep, config-manager,
@@ -103,13 +104,14 @@ services components for the dnf-plugins-core package.
 cd %{_builddir}/dnf-plugins-core-4.4.2
 %patch -P 1 -p1
 %patch -P 2 -p1
+%patch -P 3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1691527248
+export SOURCE_DATE_EPOCH=1691529057
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -123,7 +125,7 @@ make  %{?_smp_mflags}  ; make doc-man
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1691527248
+export SOURCE_DATE_EPOCH=1691529057
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/dnf-plugins-core
 cp %{_builddir}/dnf-plugins-core-%{version}/COPYING %{buildroot}/usr/share/package-licenses/dnf-plugins-core/4cc77b90af91e615a64ae04893fdffa7939db84c || :

@@ -1,0 +1,41 @@
+From 508ca13acd3573b30fb3fa93f2bfab169ab6737c Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Tue, 8 Aug 2023 13:45:14 -0700
+Subject: [PATCH] Force creation of dnf cache directory
+
+If the cache directory doesn't exist, create it otherwise sqlite will crash.
+---
+ plugins/generate_completion_cache.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/plugins/generate_completion_cache.py b/plugins/generate_completion_cache.py
+index eb6dafc..6b1de4f 100644
+--- a/plugins/generate_completion_cache.py
++++ b/plugins/generate_completion_cache.py
+@@ -21,6 +21,7 @@ from dnf.i18n import ucd
+ from dnfpluginscore import logger
+ 
+ import dnf
++import os
+ import os.path
+ import sqlite3
+ 
+@@ -51,6 +52,7 @@ class BashCompletionCache(dnf.Plugin):
+ 
+         if not os.path.exists(self.cache_file) or fresh:
+             try:
++                os.makedirs(os.path.dirname(self.cache_file), exist_ok=True, mode=0o755)
+                 with sqlite3.connect(self.cache_file) as conn:
+                     self._out('Generating completion cache...')
+                     cur = conn.cursor()
+@@ -74,6 +76,7 @@ class BashCompletionCache(dnf.Plugin):
+             return
+ 
+         try:
++            os.makedirs(os.path.dirname(self.cache_file), exist_ok=True, mode=0o755)
+             with sqlite3.connect(self.cache_file) as conn:
+                 self._out('Generating completion cache...')
+                 cur = conn.cursor()
+-- 
+2.41.0
+

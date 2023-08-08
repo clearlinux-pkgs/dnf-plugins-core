@@ -1,2 +1,3 @@
 0001-Don-t-fail-if-the-locklist-is-not-defined.patch
 0002-sphinx-build-3-does-not-exist.patch
+0003-Force-creation-of-dnf-cache-directory.patch
